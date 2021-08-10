@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -36,8 +38,50 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Hilt for dependency injection 
+    def hilt_version = "2.38.1"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    /*def hilt_viewmodels = "1.0.0-alpha03"
+    implementation "androidx.hilt:hilt-lifecylce-viewmodel:$hilt_viewmodels"
+    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"
+    */
+
+    // Retrofit for networking
+    def retrofit = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+
+    // Moshi for parsing the JSON format
+    def moshi = "1.9.3"
+    implementation "com.squareup.moshi:moshi:$moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+
+    // Navigation
+    def navigation = "1.0.0"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigation"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigation"
+
+    def fragment = "1.3.6"
+    implementation "androidx.fragment:fragment-ktx:$fragment"
+
+    // Joda time library for dealing with time for API below 26
+    def joda = "2.10"
+    implementation "joda-time:joda-time:$joda"
+
+    // Room database
+    def room = "2.3.0"
+    implementation "androidx.room:room-runtime:$room"
+    kapt "androidx.room:room-compiler:$room"
+
+    // Glide for images
+    def glide = "4.12.0"
+    implementation "com.github.bumptech.glide:glide:$glide"
+
 }
