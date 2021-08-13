@@ -1,6 +1,6 @@
 package com.example.android_architecture_example.domain
 
-data class Models(
+data class User(
     val email: String,
     val firstName: String,
     val id: String,

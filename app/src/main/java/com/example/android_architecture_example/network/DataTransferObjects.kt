@@ -5,11 +5,11 @@ import com.squareup.moshi.JsonClass
 
 // Holds list of Users
 @JsonClass(generateAdapter = true)
-data class NetworkUserContainer(val users:List<NetworkUser>)
+data class UserNetworkContainer(val userDTOS:List<UserDTO>)
 
 // User represents short information about person
 @JsonClass(generateAdapter = true)
-data class NetworkUser(
+data class UserDTO(
     val id:String,
     // title maybe null but im not sure
     val title:String,
