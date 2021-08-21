@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android-Architecture-Example</string>
+    <string name="unknown_error">Unknown Error</string>
 </resources>

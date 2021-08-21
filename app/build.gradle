@@ -7,7 +7,6 @@ plugins {
 
 android {
     compileSdk 30
-
     defaultConfig {
         applicationId "com.example.android_architecture_example"
         minSdk 21
@@ -50,6 +49,7 @@ dependencies {
 
     def hilt_viewmodels = "1.0.0"
     kapt "androidx.hilt:hilt-compiler:$hilt_viewmodels"
+    
 
     // Retrofit for networking
     def retrofit = "2.9.0"
