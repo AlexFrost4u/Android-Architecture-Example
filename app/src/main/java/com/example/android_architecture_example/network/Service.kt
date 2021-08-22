@@ -6,5 +6,5 @@ import retrofit2.http.Headers
 interface UserRetrofit {
     @Headers("app-id: 611e46f225e439a3e4263f5a")
     @GET("user")
-    suspend fun get():List<UserDTO>
+    suspend fun get():UserRaw
 }

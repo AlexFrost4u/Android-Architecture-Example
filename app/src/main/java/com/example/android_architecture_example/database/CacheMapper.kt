@@ -13,7 +13,6 @@ constructor() : EntityMapper<UserEntity, User> {
             title = entity.title,
             firstName = entity.firstName,
             lastName = entity.lastName,
-            email = entity.email,
             picture = entity.picture,
         )
     }
@@ -24,12 +23,12 @@ constructor() : EntityMapper<UserEntity, User> {
             title = domainModel.title,
             firstName = domainModel.firstName,
             lastName = domainModel.lastName,
-            email = domainModel.email,
             picture = domainModel.picture,
         )
     }
 
-    fun mapFromEntityList(entities:List<UserEntity>):List<User>{
-        return entities.map{mapFromEntity(it)}
+    fun mapFromEntityList(entities: List<UserEntity>): List<User> {
+        return entities.map { mapFromEntity(it) }
     }
+
 }

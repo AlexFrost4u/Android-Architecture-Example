@@ -21,7 +21,7 @@ constructor(
         emit(DataState.Loading)
         delay(1000)
         try{
-            val networkUsers = userRetrofit.get()
+            val networkUsers = networkMapper.mapFromRawData(userRetrofit.get())
             val users = networkMapper.mapFromEntityList(networkUsers)
             for(user in users){
                 userDao.insert(cacheMapper.mapToEntity(user))

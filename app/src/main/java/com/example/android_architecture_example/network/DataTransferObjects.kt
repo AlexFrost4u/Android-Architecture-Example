@@ -15,7 +15,8 @@ data class UserDTO(
     val title:String,
     val firstName:String,
     val lastName:String,
-    val email:String,
     val picture:String
 )
+
+
 

@@ -19,9 +19,6 @@ data class UserEntity constructor(
     @ColumnInfo(name = "lastName")
     var lastName: String,
 
-    @ColumnInfo(name = "email")
-    var email: String,
-
     @ColumnInfo(name = "picture")
     var picture: String
 )

@@ -9,7 +9,6 @@ class NetworkMapper
 constructor() : EntityMapper<UserDTO, User> {
     override fun mapFromEntity(entity: UserDTO): User {
         return User(
-            email = entity.email,
             firstName = entity.firstName,
             id = entity.id,
             lastName = entity.lastName,
@@ -20,7 +19,6 @@ constructor() : EntityMapper<UserDTO, User> {
 
     override fun mapToEntity(domainModel: User): UserDTO {
         return UserDTO(
-            email = domainModel.email,
             firstName = domainModel.firstName,
             id = domainModel.id,
             lastName = domainModel.lastName,
@@ -32,5 +30,9 @@ constructor() : EntityMapper<UserDTO, User> {
     fun mapFromEntityList(entities:List<UserDTO>):List<User>{
         return entities.map{ mapFromEntity(it)
         }
+    }
+
+    fun mapFromRawData(rawInfo:UserRaw):List<UserDTO>{
+        return rawInfo.`data`
     }
 }
