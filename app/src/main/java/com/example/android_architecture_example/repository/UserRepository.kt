@@ -6,11 +6,10 @@ import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.network.NetworkMapper
 import com.example.android_architecture_example.network.UserRetrofit
 import com.example.android_architecture_example.util.DataState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class MainRepository
+class UserRepository
 constructor(
     private val userDao: UserDao,
     private val userRetrofit: UserRetrofit,
@@ -19,10 +18,9 @@ constructor(
     ){
     suspend fun getUser(): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading)
-        delay(1000)
         try{
-            val networkUsers = networkMapper.mapFromRawData(userRetrofit.get())
-            val users = networkMapper.mapFromEntityList(networkUsers)
+            val rawData = networkMapper.mapFromRawData(userRetrofit.get())
+            val users = networkMapper.mapFromEntityList(rawData)
             for(user in users){
                 userDao.insert(cacheMapper.mapToEntity(user))
             }
