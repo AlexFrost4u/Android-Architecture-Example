@@ -12,25 +12,38 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OverviewViewModel @Inject constructor(
+class OverviewViewModel
+@Inject
+constructor(
     private val userRepository: UserRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    // DataState to determine state of retrofit inquiry
+    // DataState to determine state of retrofit query
     private val _dataState: MutableLiveData<DataState<List<User>>> = MutableLiveData()
 
     // Exposing for global usage
     val dataState: LiveData<DataState<List<User>>>
         get() = _dataState
 
+    // Data itself
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>>
+        get() = _users
+
+    // Navigate to selected User Profile
+    private val _navigateToSelectedUserProfile = MutableLiveData<User?>()
+
+    val navigateToSelectedUserProfile: LiveData<User?>
+        get() = _navigateToSelectedUserProfile
+
     private val _progressBarIsVisible = MutableLiveData<Int>()
     val progressBarIsVisible: LiveData<Int>
         get() = _progressBarIsVisible
 
-    private val _mainText = MutableLiveData<String>()
-    val mainText: LiveData<String>
-        get() = _mainText
+    private val _errorText = MutableLiveData<String>()
+    val errorText: LiveData<String>
+        get() = _errorText
 
     fun setStateEvent(overviewStateEvent: OverviewStateEvent) {
         viewModelScope.launch {
@@ -47,29 +60,32 @@ class OverviewViewModel @Inject constructor(
         }
     }
 
-    fun appendUserNames(users: List<User>) {
-        val sb = StringBuilder()
-        for (user in users) {
-            sb.append(user.firstName + "\n")
-        }
-        _mainText.value = sb.toString()
-    }
-
     fun displayProgressBar(isDisplayed: Boolean) {
-        if(isDisplayed){
+        if (isDisplayed) {
             _progressBarIsVisible.value = View.VISIBLE
-        }else{
+        } else {
             _progressBarIsVisible.value = View.GONE
         }
     }
 
-    fun displayError(message:String?){
-        _mainText.value = message ?: "Unknown error"
+    fun navigateToDetailScreen(user: User) {
+        _navigateToSelectedUserProfile.value = user
+    }
+
+    fun doneNavigatingToDetailScreen() {
+        _navigateToSelectedUserProfile.value = null
+    }
+
+    fun displayError(message: String?) {
+        _errorText.value = message ?: "Unknown error"
+    }
+
+    fun setData(users: List<User>) {
+        _users.value = users
     }
 }
 
 sealed class OverviewStateEvent {
     object GetUserEvents : OverviewStateEvent()
-
     object None : OverviewStateEvent()
 }

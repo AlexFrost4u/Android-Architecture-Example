@@ -6,6 +6,7 @@ import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.network.NetworkMapper
 import com.example.android_architecture_example.network.UserRetrofit
 import com.example.android_architecture_example.util.DataState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -24,7 +25,7 @@ constructor(
             for(user in users){
                 userDao.insert(cacheMapper.mapToEntity(user))
             }
-            val cachedUsers = userDao.get()
+            val cachedUsers = userDao.getAll()
             emit(DataState.Success(cacheMapper.mapFromEntityList(cachedUsers)))
         }catch(e:Exception){
             emit(DataState.Error(e))

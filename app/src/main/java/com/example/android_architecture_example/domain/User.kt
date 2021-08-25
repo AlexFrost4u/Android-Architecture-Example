@@ -5,5 +5,6 @@ data class User(
     val id: String,
     val lastName: String,
     val picture: String,
+    // title can be empty
     val title: String
 )

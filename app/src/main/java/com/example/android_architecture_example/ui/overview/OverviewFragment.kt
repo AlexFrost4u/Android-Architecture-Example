@@ -24,6 +24,10 @@ class OverviewFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        binding.userGrid.adapter = UserGridAdapter(UserGridAdapter.OnClickListener {
+            viewModel.navigateToDetailScreen(it)
+        })
+
         viewModel.setStateEvent(OverviewStateEvent.GetUserEvents)
 
         subscribeObservers()
@@ -31,15 +35,16 @@ class OverviewFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        viewModel.dataState.observe(viewLifecycleOwner, { dataSate ->
-            when (dataSate) {
+        viewModel.dataState.observe(viewLifecycleOwner, { dataState ->
+            when (dataState) {
                 is DataState.Success<List<User>> -> {
                     viewModel.displayProgressBar(false)
-                    viewModel.appendUserNames(dataSate.data)
+                    viewModel.setData(dataState.data)
+                    println(dataState.data)
                 }
                 is DataState.Error -> {
                     viewModel.displayProgressBar(false)
-                    viewModel.displayError(dataSate.exception.message)
+                    viewModel.displayError(dataState.exception.message)
                 }
                 is DataState.Loading -> {
                     viewModel.displayProgressBar(true)

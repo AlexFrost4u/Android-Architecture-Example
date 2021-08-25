@@ -14,16 +14,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.mainText}"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_grid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:padding="6dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Some information "/>
+            app:listData="@{viewModel.users}"
+            app:spanCount="1"
+            tools:itemCount="16"
+            tools:listitem="@layout/list_item" />
 
         <ProgressBar
             android:id="@+id/overviewProgressBar"
@@ -31,10 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            app:setVisibility="@{viewModel.progressBarIsVisible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:setVisibility="@{viewModel.progressBarIsVisible}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
