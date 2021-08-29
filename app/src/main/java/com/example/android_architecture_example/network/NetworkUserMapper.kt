@@ -4,7 +4,7 @@ import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.util.EntityMapper
 import javax.inject.Inject
 
-class NetworkMapper
+class NetworkUserMapper
 @Inject
 constructor() : EntityMapper<UserDTO, User> {
     override fun mapFromEntity(entity: UserDTO): User {

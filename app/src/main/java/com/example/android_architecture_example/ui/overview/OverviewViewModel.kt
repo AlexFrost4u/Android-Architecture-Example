@@ -16,15 +16,14 @@ class OverviewViewModel
 @Inject
 constructor(
     private val userRepository: UserRepository,
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // DataState to determine state of retrofit query
-    private val _dataState: MutableLiveData<DataState<List<User>>> = MutableLiveData()
+    private val _userDataState: MutableLiveData<DataState<List<User>>> = MutableLiveData()
 
     // Exposing for global usage
-    val dataState: LiveData<DataState<List<User>>>
-        get() = _dataState
+    val userDataState: LiveData<DataState<List<User>>>
+        get() = _userDataState
 
     // Data itself
     private val _users = MutableLiveData<List<User>>()
@@ -33,13 +32,18 @@ constructor(
 
     // Navigate to selected User Profile
     private val _navigateToSelectedUserProfile = MutableLiveData<User?>()
-
     val navigateToSelectedUserProfile: LiveData<User?>
         get() = _navigateToSelectedUserProfile
 
+    // Show progress bar
     private val _progressBarIsVisible = MutableLiveData<Int>()
     val progressBarIsVisible: LiveData<Int>
         get() = _progressBarIsVisible
+
+    // Show error text
+    private val _errorTextIsVisible : MutableLiveData<Int> = MutableLiveData(View.GONE)
+    val errorTextIsVisible: LiveData<Int>
+        get() = _errorTextIsVisible
 
     private val _errorText = MutableLiveData<String>()
     val errorText: LiveData<String>
@@ -51,7 +55,7 @@ constructor(
                 is OverviewStateEvent.GetUserEvents -> {
                     userRepository.getUser()
                         .onEach { dataState ->
-                            _dataState.value = dataState
+                            _userDataState.value = dataState
                         }
                         .launchIn(viewModelScope)
                 }
@@ -76,8 +80,13 @@ constructor(
         _navigateToSelectedUserProfile.value = null
     }
 
+    private fun showErrorText(){
+        _errorTextIsVisible.value = View.VISIBLE
+    }
+
     fun displayError(message: String?) {
         _errorText.value = message ?: "Unknown error"
+        showErrorText()
     }
 
     fun setData(users: List<User>) {

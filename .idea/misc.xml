@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/drawable/loading_img.xml" value="0.3390625" />
+        <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/font/allerta_stencil.xml" value="0.3770833333333333" />
         <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/layout/activity_main.xml" value="0.32563405797101447" />
-        <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/layout/fragment_detail.xml" value="0.2359375" />
+        <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/layout/fragment_overview.xml" value="0.33" />
         <entry key="..\:/Users/AF1M/AndroidStudioProjects/Android-Architecture-Example/app/src/main/res/layout/list_item.xml" value="0.2359375" />
       </map>

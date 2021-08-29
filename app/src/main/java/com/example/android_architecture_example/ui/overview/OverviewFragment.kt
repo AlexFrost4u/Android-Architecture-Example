@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.android_architecture_example.databinding.FragmentOverviewBinding
 import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.util.DataState
@@ -24,23 +25,34 @@ class OverviewFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.userGrid.adapter = UserGridAdapter(UserGridAdapter.OnClickListener {
-            viewModel.navigateToDetailScreen(it)
-        })
 
         viewModel.setStateEvent(OverviewStateEvent.GetUserEvents)
-
         subscribeObservers()
+
+        binding.userGrid.adapter = UserGridAdapter(UserGridAdapter.OnClickListener {
+            viewModel.apply {
+                navigateToDetailScreen(it)
+            }
+        })
+
+        viewModel.navigateToSelectedUserProfile.observe(viewLifecycleOwner, {
+            if (null != it) {
+                this.findNavController()
+                    .navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(it.id))
+                viewModel.doneNavigatingToDetailScreen()
+            }
+        })
+
+
         return binding.root
     }
 
     private fun subscribeObservers() {
-        viewModel.dataState.observe(viewLifecycleOwner, { dataState ->
+        viewModel.userDataState.observe(viewLifecycleOwner, { dataState ->
             when (dataState) {
                 is DataState.Success<List<User>> -> {
                     viewModel.displayProgressBar(false)
                     viewModel.setData(dataState.data)
-                    println(dataState.data)
                 }
                 is DataState.Error -> {
                     viewModel.displayProgressBar(false)

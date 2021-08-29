@@ -2,7 +2,8 @@ package com.example.android_architecture_example.di
 
 import com.example.android_architecture_example.database.CacheMapper
 import com.example.android_architecture_example.database.UserDao
-import com.example.android_architecture_example.network.NetworkMapper
+import com.example.android_architecture_example.network.NetworkUserFullMapper
+import com.example.android_architecture_example.network.NetworkUserMapper
 import com.example.android_architecture_example.network.UserRetrofit
 import com.example.android_architecture_example.repository.UserRepository
 import dagger.Module
@@ -21,8 +22,9 @@ object RepositoryModule {
         userDao: UserDao,
         retrofit: UserRetrofit,
         cacheMapper: CacheMapper,
-        networkMapper: NetworkMapper
+        networkUserMapper: NetworkUserMapper,
+        networkUserFullMapper: NetworkUserFullMapper
     ): UserRepository {
-        return UserRepository(userDao, retrofit, cacheMapper, networkMapper)
+        return UserRepository(userDao, retrofit, cacheMapper, networkUserMapper,networkUserFullMapper)
     }
 }

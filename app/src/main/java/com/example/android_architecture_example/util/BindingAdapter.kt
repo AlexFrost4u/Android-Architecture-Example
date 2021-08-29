@@ -10,7 +10,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.android_architecture_example.R
 import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.ui.overview.UserGridAdapter
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
+import org.joda.time.format.ISODateTimeFormat
+import org.joda.time.format.ISODateTimeFormat.date
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
 import java.util.*
 
 @BindingAdapter("imgUrl")
@@ -38,7 +44,7 @@ fun getFullName(textView: TextView, user: User) {
             if (it.isLowerCase()) it.titlecase(
                 Locale.getDefault()
             ) else it.toString()
-        }+ ".").append(user.firstName + " ").append(user.lastName)
+        } + ".").append(user.firstName + " ").append(user.lastName)
     }
 }
 
@@ -47,3 +53,11 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<User>?) {
     val adapter = recyclerView.adapter as UserGridAdapter
     adapter.submitList(data)
 }
+
+// TO-DO
+/*
+@BindingAdapter("convertTime")
+fun getBirthDay(textView: TextView, time: String) {
+    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
+    textView.text = formatter.parser(dayTime)
+}*/
