@@ -34,10 +34,10 @@ constructor(
         }
     }
 
-    suspend fun getUserFull(userId: String): Flow<DataState<UserFull>> = flow {
+    suspend fun getUserFull(id: String): Flow<DataState<UserFull>> = flow {
         emit(DataState.Loading)
         try {
-            val user = networkUserFullMapper.mapFromEntity(userRetrofit.getUser(userId))
+            val user = networkUserFullMapper.mapFromEntity(userRetrofit.getUser(id))
             emit(DataState.Success(user))
         } catch (e: Exception) {
             emit(DataState.Error(e))

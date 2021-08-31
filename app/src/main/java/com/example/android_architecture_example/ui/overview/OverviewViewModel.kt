@@ -36,18 +36,22 @@ constructor(
         get() = _navigateToSelectedUserProfile
 
     // Show progress bar
-    private val _progressBarIsVisible = MutableLiveData<Int>()
-    val progressBarIsVisible: LiveData<Int>
-        get() = _progressBarIsVisible
+    private val _progressIsVisible = MutableLiveData<Int>()
+    val progressBar: LiveData<Int>
+        get() = _progressIsVisible
 
     // Show error text
-    private val _errorTextIsVisible : MutableLiveData<Int> = MutableLiveData(View.GONE)
+    private val _errorTextIsVisible: MutableLiveData<Int> = MutableLiveData(View.GONE)
     val errorTextIsVisible: LiveData<Int>
         get() = _errorTextIsVisible
 
     private val _errorText = MutableLiveData<String>()
     val errorText: LiveData<String>
         get() = _errorText
+
+    private val _recyclerViewVisible: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
+    val recyclerViewVisible: LiveData<Int>
+        get() =_recyclerViewVisible
 
     fun setStateEvent(overviewStateEvent: OverviewStateEvent) {
         viewModelScope.launch {
@@ -64,12 +68,26 @@ constructor(
         }
     }
 
-    fun displayProgressBar(isDisplayed: Boolean) {
-        if (isDisplayed) {
-            _progressBarIsVisible.value = View.VISIBLE
-        } else {
-            _progressBarIsVisible.value = View.GONE
-        }
+    fun showUI(users: List<User>){
+        displayProgressBar(false)
+        showErrorText(false)
+        displayRecyclerView(true)
+
+        _users.value = users
+    }
+
+    fun showError(message: String?){
+        displayProgressBar(false)
+        showErrorText(true)
+        displayRecyclerView(false)
+
+        _errorText.value = message ?: "Unknown error"
+    }
+
+    fun showLoading(){
+        displayProgressBar(true)
+        showErrorText(false)
+        displayRecyclerView(false)
     }
 
     fun navigateToDetailScreen(user: User) {
@@ -80,17 +98,28 @@ constructor(
         _navigateToSelectedUserProfile.value = null
     }
 
-    private fun showErrorText(){
-        _errorTextIsVisible.value = View.VISIBLE
+    private fun displayProgressBar(isDisplayed: Boolean) {
+        if (isDisplayed) {
+            _progressIsVisible.value = View.VISIBLE
+        } else {
+            _progressIsVisible.value = View.GONE
+        }
     }
 
-    fun displayError(message: String?) {
-        _errorText.value = message ?: "Unknown error"
-        showErrorText()
+    private fun showErrorText(isDisplayed: Boolean) {
+        if (isDisplayed) {
+            _errorTextIsVisible.value = View.VISIBLE
+        } else {
+            _errorTextIsVisible.value = View.GONE
+        }
     }
 
-    fun setData(users: List<User>) {
-        _users.value = users
+    private fun displayRecyclerView(isDisplayed: Boolean){
+        if (isDisplayed) {
+            _recyclerViewVisible.value = View.VISIBLE
+        } else {
+            _recyclerViewVisible.value = View.GONE
+        }
     }
 }
 

@@ -2,7 +2,6 @@ package com.example.android_architecture_example.ui.detail
 
 import android.view.View
 import androidx.lifecycle.*
-import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.domain.UserFull
 import com.example.android_architecture_example.repository.UserRepository
 import com.example.android_architecture_example.util.DataState
@@ -10,8 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,8 +24,14 @@ constructor(
 
     // User that we need to show
     private val _selectedUser = MutableLiveData<UserFull>()
-    val selectedUser: LiveData<UserFull>
+    val selectedUserFull: LiveData<UserFull>
         get() = _selectedUser
+
+    //
+    val userFullName: LiveData<String> = Transformations.map(_selectedUser) {
+        return@map (_selectedUser.value?.title + "."
+                + _selectedUser.value?.firstName + " " + _selectedUser.value?.lastName)
+    }
 
     // DataState to determine state of retrofit query
     private val _userFullDataState: MutableLiveData<DataState<UserFull>> = MutableLiveData()
@@ -37,12 +40,17 @@ constructor(
     val userFullDataState: LiveData<DataState<UserFull>>
         get() = _userFullDataState
 
-    // Show progress bar
-    private val _progressBarIsVisible = MutableLiveData<Int>()
-    val progressBarIsVisible: LiveData<Int>
-        get() = _progressBarIsVisible
+    // Visibility of UI elements
+    private val _uiIsVisible = MutableLiveData<Int>()
+    val uiIsVisible: LiveData<Int>
+        get() = _uiIsVisible
 
-    // Show error text
+    // Visibility of progress components
+    private val _progressIsVisible = MutableLiveData<Int>()
+    val progressIsVisible: LiveData<Int>
+        get() = _progressIsVisible
+
+    // Visibility of error components
     private val _errorTextIsVisible: MutableLiveData<Int> = MutableLiveData(View.GONE)
     val errorTextIsVisible: LiveData<Int>
         get() = _errorTextIsVisible
@@ -53,7 +61,6 @@ constructor(
 
     init {
         _selectedUserId.value = savedStateHandle.get<String>("userId")
-
     }
 
     fun setStateEvent(detailStateEvent: DetailStateEvent) {
@@ -73,41 +80,52 @@ constructor(
         }
     }
 
-    fun displayProgressBar(isDisplayed: Boolean) {
-        if (isDisplayed) {
-            _progressBarIsVisible.value = View.VISIBLE
-        } else {
-            _progressBarIsVisible.value = View.GONE
-        }
+    fun displayUI(user: UserFull) {
+        showProgress(false)
+        showErrorText(false)
+        showUIElements(true)
+
+        _selectedUser.value = user
+
     }
 
-    private fun showErrorText() {
-        _errorTextIsVisible.value = View.VISIBLE
+    fun displayLoading() {
+        showProgress(true)
+        showErrorText(false)
+        showUIElements(false)
     }
 
     fun displayError(message: String?) {
+        showProgress(false)
+        showErrorText(true)
+        showUIElements(false)
+
         _errorText.value = message ?: "Unknown error"
-        showErrorText()
     }
 
-    fun setData(user: UserFull) {
-        _selectedUser.value = user
-    }
-
-    /*fun getUserFullName(): String {
-        val user = selectedUser.value
-        val sb = StringBuilder()
-        return if (user.title.isEmpty()) {
-            sb.append(user.firstName + " ").append(user.lastName).toString()
+    private fun showProgress(isDisplayed: Boolean) {
+        if (isDisplayed) {
+            _progressIsVisible.value = View.VISIBLE
         } else {
-            sb.append(user.title.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()
-                ) else it.toString()
-            } + ".").append(user.firstName + " ").append(user.lastName).toString()
+            _progressIsVisible.value = View.GONE
         }
-    }*/
+    }
 
+    private fun showErrorText(isDisplayed: Boolean) {
+        if (isDisplayed) {
+            _errorTextIsVisible.value = View.VISIBLE
+        } else {
+            _errorTextIsVisible.value = View.GONE
+        }
+    }
+
+    private fun showUIElements(isDisplayed: Boolean) {
+        if (isDisplayed) {
+            _uiIsVisible.value = View.VISIBLE
+        } else {
+            _uiIsVisible.value = View.GONE
+        }
+    }
 }
 
 sealed class DetailStateEvent {

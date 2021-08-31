@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android_architecture_example.databinding.FragmentDetailBinding
-import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.domain.UserFull
 import com.example.android_architecture_example.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,15 +35,13 @@ class DetailFragment : Fragment() {
         viewModel.userFullDataState.observe(viewLifecycleOwner, { dataState ->
             when (dataState) {
                 is DataState.Success<UserFull> -> {
-                    viewModel.displayProgressBar(false)
-                    viewModel.setData(dataState.data)
+                    viewModel.displayUI(dataState.data)
                 }
                 is DataState.Error -> {
-                    viewModel.displayProgressBar(false)
                     viewModel.displayError(dataState.exception.message)
                 }
                 is DataState.Loading -> {
-                    viewModel.displayProgressBar(true)
+                    viewModel.displayLoading()
                 }
             }
 

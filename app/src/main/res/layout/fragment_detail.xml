@@ -21,11 +21,13 @@
             android:layout_width="134dp"
             android:layout_height="134dp"
             android:layout_marginTop="16dp"
-            app:imgUrl="@{viewModel.selectedUser.picture}"
+            app:imgUrl="@{viewModel.selectedUserFull.picture}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:setVisibility="@{viewModel.uiIsVisible}"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/profile_image_description" />
 
         <TextView
             android:id="@+id/fullNameTextView"
@@ -33,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.firstName}"
+            android:text="@{viewModel.userFullName}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/fullNameLabel"
             app:layout_constraintTop_toTopOf="@+id/fullNameLabel"
@@ -45,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.gender}"
+            android:text="@{viewModel.selectedUserFull.gender}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/genderLabel"
             app:layout_constraintTop_toTopOf="@+id/genderLabel"
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.dateOfBirth}"
+            android:text="@{viewModel.selectedUserFull.dateOfBirth}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/DoBLabel"
             app:layout_constraintTop_toTopOf="@+id/DoBLabel"
@@ -73,7 +75,8 @@
             android:text="@string/address"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DoBLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/DoBLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/stateTextView"
@@ -81,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.location.state}"
+            android:text="@{viewModel.selectedUserFull.location.state}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/stateLabel"
             app:layout_constraintTop_toTopOf="@+id/stateLabel"
@@ -93,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.location.street}"
+            android:text="@{viewModel.selectedUserFull.location.street}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/streetLabel"
             app:layout_constraintTop_toTopOf="@+id/streetLabel"
@@ -105,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.location.city}"
+            android:text="@{viewModel.selectedUserFull.location.city}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/cityLabel"
             app:layout_constraintTop_toTopOf="@+id/cityLabel"
@@ -117,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.location.country}"
+            android:text="@{viewModel.selectedUserFull.location.country}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/countryLabel"
             app:layout_constraintTop_toTopOf="@+id/countryLabel"
@@ -130,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.location.timezone}"
+            android:text="@{viewModel.selectedUserFull.location.timezone}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/timezoneLabel"
             app:layout_constraintTop_toTopOf="@+id/timezoneLabel"
@@ -146,7 +149,8 @@
             android:text="@string/contact_information"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timezoneLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/timezoneLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/emailTextView"
@@ -154,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.email}"
+            android:text="@{viewModel.selectedUserFull.email}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toTopOf="@+id/textView18"
@@ -166,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="sans-serif"
-            android:text="@{viewModel.selectedUser.phone}"
+            android:text="@{viewModel.selectedUserFull.phone}"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/textView19"
             app:layout_constraintTop_toTopOf="@+id/textView19"
@@ -182,7 +186,8 @@
             android:text="@string/fullName"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+            app:layout_constraintTop_toBottomOf="@+id/profileImage"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/genderLabel"
@@ -194,7 +199,8 @@
             android:text="@string/gender"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullNameLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/fullNameLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/DoBLabel"
@@ -206,7 +212,8 @@
             android:text="@string/date_of_birth"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/genderTextView"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/stateLabel"
@@ -218,7 +225,8 @@
             android:text="@string/state"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/addressLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/streetLabel"
@@ -230,7 +238,8 @@
             android:text="@string/street"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stateLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/stateLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/cityLabel"
@@ -242,7 +251,8 @@
             android:text="@string/city"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/streetLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/streetLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/countryLabel"
@@ -254,7 +264,8 @@
             android:text="@string/country"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/cityLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/timezoneLabel"
@@ -266,7 +277,8 @@
             android:text="@string/timezone"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countryLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/countryLabel"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/textView18"
@@ -278,7 +290,8 @@
             android:text="@string/email"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contactInformation" />
+            app:layout_constraintTop_toBottomOf="@+id/contactInformation"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <TextView
             android:id="@+id/textView19"
@@ -290,7 +303,8 @@
             android:text="@string/phone"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            app:setVisibility="@{viewModel.uiIsVisible}" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -301,18 +315,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setVisibility="@{viewModel.progressBarIsVisible}"/>
+            app:setVisibility="@{viewModel.progressIsVisible}" />
 
         <TextView
             android:id="@+id/errorDetailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:text="@{viewModel.errorText}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setVisibility="@{viewModel.errorTextIsVisible}" />
+
+        <TextView
+            android:id="@+id/loadingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/loading"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            app:setVisibility="@{viewModel.progressIsVisible}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

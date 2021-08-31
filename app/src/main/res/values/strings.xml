@@ -14,4 +14,6 @@
     <string name="timezone">Timezone:</string>
     <string name="email">Email:</string>
     <string name="phone">Phone:</string>
+    <string name="loading">Loading…</string>
+    <string name="profile_image_description">Profile Image</string>
 </resources>

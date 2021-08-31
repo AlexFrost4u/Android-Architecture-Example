@@ -21,20 +21,25 @@ class OverviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Set up binding
         val binding = FragmentOverviewBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
+        // Get user list
         viewModel.setStateEvent(OverviewStateEvent.GetUserEvents)
+
+
         subscribeObservers()
 
+        // Set up navigation upon click on recyclerview element
         binding.userGrid.adapter = UserGridAdapter(UserGridAdapter.OnClickListener {
             viewModel.apply {
                 navigateToDetailScreen(it)
             }
         })
 
+        // Navigate to chosen user with ID
         viewModel.navigateToSelectedUserProfile.observe(viewLifecycleOwner, {
             if (null != it) {
                 this.findNavController()
@@ -42,8 +47,6 @@ class OverviewFragment : Fragment() {
                 viewModel.doneNavigatingToDetailScreen()
             }
         })
-
-
         return binding.root
     }
 
@@ -51,15 +54,13 @@ class OverviewFragment : Fragment() {
         viewModel.userDataState.observe(viewLifecycleOwner, { dataState ->
             when (dataState) {
                 is DataState.Success<List<User>> -> {
-                    viewModel.displayProgressBar(false)
-                    viewModel.setData(dataState.data)
+                    viewModel.showUI(dataState.data)
                 }
                 is DataState.Error -> {
-                    viewModel.displayProgressBar(false)
-                    viewModel.displayError(dataState.exception.message)
+                    viewModel.showError(dataState.exception.message)
                 }
                 is DataState.Loading -> {
-                    viewModel.displayProgressBar(true)
+                    viewModel.showLoading()
                 }
             }
 

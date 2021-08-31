@@ -1,6 +1,7 @@
 package com.example.android_architecture_example.network
 
 import com.example.android_architecture_example.domain.Location
+import com.example.android_architecture_example.domain.User
 import com.example.android_architecture_example.domain.UserFull
 import com.example.android_architecture_example.util.EntityMapper
 import javax.inject.Inject
@@ -60,6 +61,16 @@ constructor() : EntityMapper<UserFullDTO, UserFull> {
             state = domainModel.state,
             street = domainModel.street,
             timezone = domainModel.timezone
+        )
+    }
+
+    fun mapToUser(userFull: UserFull): User {
+        return User(
+            firstName = userFull.firstName,
+            lastName = userFull.lastName,
+            title = userFull.title,
+            picture = userFull.picture,
+            id = userFull.id
         )
     }
 }
