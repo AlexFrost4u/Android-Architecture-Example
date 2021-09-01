@@ -29,7 +29,7 @@ class OverviewFragment : Fragment() {
         // Get user list
         viewModel.setStateEvent(OverviewStateEvent.GetUserEvents)
 
-
+        // Set up state observer
         subscribeObservers()
 
         // Set up navigation upon click on recyclerview element

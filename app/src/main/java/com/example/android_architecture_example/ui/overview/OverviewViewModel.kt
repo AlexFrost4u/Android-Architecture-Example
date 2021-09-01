@@ -35,20 +35,22 @@ constructor(
     val navigateToSelectedUserProfile: LiveData<User?>
         get() = _navigateToSelectedUserProfile
 
-    // Show progress bar
+    // Visibility of progress components
     private val _progressIsVisible = MutableLiveData<Int>()
     val progressBar: LiveData<Int>
         get() = _progressIsVisible
 
-    // Show error text
+    // Visibility of error text
     private val _errorTextIsVisible: MutableLiveData<Int> = MutableLiveData(View.GONE)
     val errorTextIsVisible: LiveData<Int>
         get() = _errorTextIsVisible
 
+    // Error text value
     private val _errorText = MutableLiveData<String>()
     val errorText: LiveData<String>
         get() = _errorText
 
+    // Visibility of UI components
     private val _recyclerViewVisible: MutableLiveData<Int> = MutableLiveData(View.VISIBLE)
     val recyclerViewVisible: LiveData<Int>
         get() =_recyclerViewVisible
